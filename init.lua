@@ -5,6 +5,7 @@ vim.opt.termguicolors = true
 
 require("s.lazy")
 require("s.settings")
+require("glance").setup()
 require("nvim-tree").setup()
 require("Comment").setup()
 vim.opt.clipboard = "unnamedplus"

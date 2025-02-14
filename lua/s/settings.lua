@@ -1,6 +1,7 @@
 local global = vim.g
 local o = vim.opt
 
+o.scrolloff = 999 -- Keep cursor in the middle of the screen while scrolling
 o.number = true -- Print the line number in front of each line
 o.relativenumber = true -- Show the line number relative to the current line
 o.clipboard = "unnamedplus" -- Clipboard functionality
@@ -23,3 +24,42 @@ o.inccommand = "split" -- When nonempty, shows the effects of :substitute, :smag
 o.splitright = true
 o.splitbelow = true -- When on, splitting a window will put the new window below the current one
 o.termguicolors = true
+o.ignorecase = true -- Built in command completion with tab ignores case
+
+-- use Map() to map keys for convenience
+function Map(mode, lhs, rhs, opts)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.keymap.set(mode, lhs, rhs, options)
+end
+ 
+-- Add keybinding to toggle nvim-tree
+Map('n', '<leader>e', ':NvimTreeToggle<CR>')
+ 
+-- Switch focus between windows using <leader>h, <leader>j, <leader>k, <leader>l
+Map("n", "<C-h>", "<C-w>h")
+Map("n", "<C-j>", "<C-w>j")
+Map("n", "<C-k>", "<C-w>k")
+Map("n", "<C-l>", "<C-w>l")
+ 
+-- switch focus terminal
+Map("t", "<C-h>", "<cmd>wincmd h<CR>")
+Map("t", "<C-j>", "<cmd>wincmd j<CR>")
+Map("t", "<C-k>", "<cmd>wincmd k<CR>")
+Map("t", "<C-l>", "<cmd>wincmd l<CR>")
+ 
+-- resize binds
+Map("n", "<C-Up>", ":resize -2<CR>")
+Map("n", "<C-Down>", ":resize +2<CR>")
+Map("n", "<C-Left>", ":vertical resize -2<CR>")
+Map("n", "<C-Right>", ":vertical resize +2<CR>")
+ 
+-- resize terminal
+Map("t", "<C-Up>", "<cmd>resize -2<CR>")
+Map("t", "<C-Down>", "<cmd>resize +2<CR>")
+Map("t", "<C-Left>", "<cmd>vertical resize -2<CR>")
+Map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
+ 
+Map("n", "<Esc>", "<cmd>noh<CR>")
